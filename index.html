@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app="weatherApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="jquery.min.js"></script>
+    <script src="angular.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="bootstrap.min.js"></script>
+    <script src="app.js"></script>
+    <!--<link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900' rel='stylesheet' type='text/css'>-->
+    <link rel="stylesheet" href="style.css">
+    <title>Bootstrap Mobile Weather</title>
+</head>
+<body ng-controller="WeatherController as main">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#weatherNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Bootstrap Weather</a>
+        </div>
+        <div class="collapse navbar-collapse" id="weatherNavbar">
+            <ul class="nav navbar-nav" data-toggle="collapse">
+                <li><a ng-click="main.getWeather('KMSP')" href="#" data-toggle="collapse" data-target="#weatherNavbar.in">Minneapolis</a></li>
+                <li><a ng-click="main.getWeather('KEAU')" href="#" data-toggle="collapse" data-target="#weatherNavbar.in">Eau Claire</a></li>
+                <li><a ng-click="main.getWeather('KORD')" href="#" data-toggle="collapse" data-target="#weatherNavbar.in">Chicago</a></li>
+                <li><a ng-click="main.getWeather('KSAN')" href="#" data-toggle="collapse" data-target="#weatherNavbar.in">San Diego</a></li>
+                <li><a ng-click="main.getWeather('EGLL')" href="#" data-toggle="collapse" data-target="#weatherNavbar.in">London</a></li>
+            </ul>
+            <div class="navbar-form navbar-right" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Location" ng-model="main.searchTerm" onclick="select()">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default" ng-click="main.searchWeather(main.searchTerm)" data-toggle="collapse" data-target="#weatherNavbar.in">Search</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="spinner" ng-if="main.showSpinner">
+    <img ng-src="spinner.gif" />
+</div>
+
+<div class="locationMessage" ng-if="main.locationError" style="font-size:30px;" ng-cloak>{{ main.message }}</div>
+
+<div class="dataWrapper" ng-if="main.showWeather" ng-cloak>
+
+    <div class="cityData">
+
+        <div class="city">{{ main.weather.city }}</div>
+
+        <div class="border"></div>
+
+        <div class="temperature">{{ main.weather.temperature }}</div>
+
+        <div><img ng-src="{{ main.weather.icon }}" /></div>
+        <div class="conditions">{{ main.weather.conditions }}</div>
+
+        <div class="border"></div>
+
+        <div class="weatherType">humidity</div>
+        <div class="weatherData">{{ main.weather.humidity }}</div>
+
+        <div class="weatherType">dew point</div>
+        <div class="weatherData">{{ main.weather.dewPoint }}&deg;</div>
+
+        <div class="weatherType">wind</div>
+        <div class="weatherData">{{ main.weather.windSpeed }} mph {{ main.weather.windDirection }}</div>
+
+        <div class="weatherType">pressure</div>
+        <div class="weatherData">{{ main.weather.pressure }} {{ main.weather.pressureTrend }}</div>
+
+        <div class="border"></div>
+
+        <div class="forecastGroup" ng-repeat="forecast in main.weather.forecast track by $index">
+            <span class="forecastDate">{{ forecast.date }}</span>
+            <br>
+            <img ng-src="{{ forecast.icon }}" />
+            <br>
+            <span class="forecastTemp">Hi: <b>{{ forecast.hi }}</b>&nbsp;&nbsp;Lo: <b>{{ forecast.lo }}</b></span>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

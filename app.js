@@ -24,6 +24,9 @@ app.controller("WeatherController", ['$http', function($http) {
         main.showSpinner = true;
         main.locationError = false;
 
+        // convert location to upper case for API use
+        location = location.toUpperCase();
+
         $http.jsonp('http://api.wunderground.com/api/a7942b382662121a/geolookup/conditions/forecast/astronomy/q/' + location + '.json?callback=JSON_CALLBACK')
             .success(function (data) {
 
